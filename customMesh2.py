@@ -1,7 +1,7 @@
 
 #manual custom MESH Topo with
         # three AP with each station
-        #
+        #topology worked
 
 from mininet.log import setLogLevel, info
 from mn_wifi.link import wmediumd, mesh
@@ -19,12 +19,12 @@ class CustomTopo:
 
         info( "=======>Creating AP and baseStations<========= \n")
         net=Mininet_wifi(controller=Controller, wmediumd_mode=interference, link=wmediumd, accessPoint=OVSKernelAP)
-        ap1=net.addAccessPoint('ap1', wlans=4, mode='g',ssid= 'ssid-ap1,', position="20,10,10")
-        ap2=net.addAccessPoint('ap2', wlans=4, mode='g',ssid= 'ssid-ap2,', position="10,20,10")
-        ap3=net.addAccessPoint('ap3', wlans=4, mode='g',ssid= 'ssid-ap3,', position="20,10,10")
-        sta1=net.addStation('sta1')
-        sta2=net.addStation('sta2')
-        sta3=net.addStation('sta3')
+        ap1=net.addAccessPoint('ap1', wlans=4, mode='g',ssid= 'ssid-ap1,,,', position="0,0,0")
+        ap2=net.addAccessPoint('ap2', wlans=4, mode='g',ssid= 'ssid-ap2,,,', position="10,0,0")
+        ap3=net.addAccessPoint('ap3', wlans=4, mode='g',ssid= 'ssid-ap3,,,', position="0,10,0")
+        sta1=net.addStation('sta1', position='10,0,0')
+        sta2=net.addStation('sta2',position='-10,10,0')
+        sta3=net.addStation('sta3', position='10,10,20')
 
         info( "=======>Creating controller<========= \n")
         c1=net.addController('Controller0',controller=Controller, ip='127.0.0.1',
@@ -41,9 +41,9 @@ class CustomTopo:
         net.addLink(ap1,sta1)
         net.addLink(ap2,sta2)
         net.addLink(ap3,sta3)
-        net.addLink(ap1, intf='ap1-wlan1', ssid='mesh-ssid', cls=mesh)
-        net.addLink(ap2, intf='ap2-wlan1', ssid='mesh-ssid', cls=mesh)
-        net.addLink(ap3, intf='ap3-wlan1', ssid='mesh-ssid', cls=mesh)
+        net.addLink(ap1, intf='ap1-wlan1', ssid='mesh-ssid', cls=mesh, channel=5)
+        net.addLink(ap2, intf='ap2-wlan1', ssid='mesh-ssid', cls=mesh, channel=5)
+        net.addLink(ap3, intf='ap3-wlan1', ssid='mesh-ssid', cls=mesh, channel=5)
 
         info( "=======>starting the network<========= \n")
         net.build()
